@@ -24,7 +24,7 @@ public class Busqueda {
 			actual = Abiertos.get(0);
 			Abiertos.remove(0);
 
-			System.out.println(actual);
+			//System.out.println(actual);
 			
 			Cerrados.add(actual);
 
@@ -34,7 +34,7 @@ public class Busqueda {
 				
 			} else {
 				Sucesores = actual.getSucesores();
-				System.out.println("Sucesores: " + Sucesores.size());
+				//System.out.println("Sucesores: " + Sucesores.size());
 
 				if (profundidad) {
 					Abiertos.addAll(0, Sucesores);

@@ -29,7 +29,7 @@ public class Practica_06_exe {
 
 		int iteraciones = 100;
 		int seed = -1574729905;
-		int level = 1;
+		int level = 2;
 
 //    	lanzar(agente, seed, level);
     	lanzar(agente, new Random(System.currentTimeMillis()).nextInt(), level);
@@ -41,7 +41,7 @@ public class Practica_06_exe {
 	public static void pruebaEjecucion(String agente) {
 		ArrayList<Resultados> resultados = new ArrayList<Resultados>();
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 2; i++) {
 			int seed = new Random(System.currentTimeMillis()).nextInt();
 			//int semillas[] = {-1708235914, -1980253386, -1939470003, -1903688355, -1872138945};
 			resultados.add(lanzar(agente, seed, i));
@@ -90,7 +90,7 @@ public class Practica_06_exe {
 	}
 
 	public static void guardarEjecucion(int numPuntos, int numTics) {
-		String archivo = "C:\\Users\\Paulu\\Desktop\\CURSO2425\\SEGUNDO CUATRIMESTRE\\[SI] Sistemas Inteligentes\\prueba\\si2025\\src\\si2025\\jesusdavidcalvente083alu\\p02\\ejecuciones.csv";
+		String archivo = "C:\\Users\\Paulu\\Desktop\\CURSO2425\\SEGUNDO CUATRIMESTRE\\[SI] Sistemas Inteligentes\\prueba\\si2025\\src\\si2025\\jesusdavidcalvente083alu\\p06\\ejecuciones.csv";
 
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo, true))) {
 

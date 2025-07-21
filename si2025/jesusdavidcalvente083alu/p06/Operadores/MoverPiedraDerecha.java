@@ -14,13 +14,14 @@ public class MoverPiedraDerecha extends Operador {
 
 		ArrayList<Literal> Precondicion=new ArrayList<Literal>();
 		Precondicion.add(new Literal("AvatarEnPosicion", x, y));
-		Precondicion.add(new Literal("EspacioLibre", x+2, y));
 		Precondicion.add(new Literal("BloqueEn", x+1, y));
+		Precondicion.add(new Literal("EspacioLibre", x+2, y));
 		super.setPre(Precondicion);
 		
 		ArrayList<Literal> Adicion=new ArrayList<Literal>();
 		Adicion.add(new Literal("EspacioLibre", x, y));
 		Adicion.add(new Literal("AvatarEnPosicion", x+1, y));
+		Adicion.add(new Literal("PiedraMovida", x+1, y));
 		Adicion.add(new Literal("BloqueEn", x+2, y));
 		super.setAdd(Adicion);
 		

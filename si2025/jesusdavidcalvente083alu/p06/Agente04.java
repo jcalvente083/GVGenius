@@ -1,5 +1,6 @@
 package si2025.jesusdavidcalvente083alu.p06;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import core.game.StateObservation;
@@ -7,6 +8,15 @@ import core.player.AbstractPlayer;
 import ontology.Types.ACTIONS;
 import tools.ElapsedCpuTimer;
 import si2025.jesusdavidcalvente083alu.p06.Cerebro.*;
+import si2025.jesusdavidcalvente083alu.p06.Operadores.CogerLlave;
+import si2025.jesusdavidcalvente083alu.p06.Operadores.MoverAvatarAbajo;
+import si2025.jesusdavidcalvente083alu.p06.Operadores.MoverAvatarArriba;
+import si2025.jesusdavidcalvente083alu.p06.Operadores.MoverAvatarDerecha;
+import si2025.jesusdavidcalvente083alu.p06.Operadores.MoverAvatarIzquierda;
+import si2025.jesusdavidcalvente083alu.p06.Operadores.MoverPiedraAbajo;
+import si2025.jesusdavidcalvente083alu.p06.Operadores.MoverPiedraDerecha;
+import si2025.jesusdavidcalvente083alu.p06.Operadores.MoverPiedraIzquierda;
+import si2025.jesusdavidcalvente083alu.p06.Operadores.TaparAgujeroHaciaAbajo;
 
 
 
@@ -22,8 +32,11 @@ public class Agente04 extends AbstractPlayer{
 				
 		mundo = new Mundo(stateObs);
 		cerebro = new Busqueda(); 
+		
 		solucion = cerebro.piensa(mundo, true); 
 		
+		
+					
 		if(solucion == null) {
 			System.out.println("No se ha encontrado una solucion");
 			return;

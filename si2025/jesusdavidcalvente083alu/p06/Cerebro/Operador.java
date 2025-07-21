@@ -141,7 +141,7 @@ public abstract class Operador {
 	
 	@Override
 	public String toString() {
-		return nombre + "( " + x + ", " + y + " )" + "\n";
+		return nombre + "( " + x + ", " + y + " )";
 	
 	
 	

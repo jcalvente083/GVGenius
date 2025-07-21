@@ -24,6 +24,8 @@ public class STRIPS implements Estado {
 		estadoActual = m.getEstadoInicial();
 
 		metas = m.getMetas();
+		
+		System.out.println(metas);
 
 		if (metas.size() > 1) {
 
@@ -52,6 +54,7 @@ public class STRIPS implements Estado {
 		this.estadoActual = new ArrayList<>(estadoActual);
 		this.plan = new ArrayList<>(plan);
 		this.operadores = operadores;
+		
 		this.metas = metas;
 	}
 

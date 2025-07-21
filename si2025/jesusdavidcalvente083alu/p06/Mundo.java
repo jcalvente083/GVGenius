@@ -49,9 +49,9 @@ public class Mundo {
 
 	public void actualizar(StateObservation stateObs) {
 
-		gridObs = so.getObservationGrid();
+		gridObs = stateObs.getObservationGrid();
 
-		posAgente = so.getAvatarPosition();
+		posAgente = stateObs.getAvatarPosition();
 
 		posAgente.x = (int) (posAgente.x / tambloque);
 		posAgente.y = (int) (posAgente.y / tambloque);
@@ -64,10 +64,79 @@ public class Mundo {
 		meta.add(new Literal("AvatarEnPosicion", (int) posPuerta.x, (int) posPuerta.y));
 		meta.add(new Literal("LlaveCogida", -1, -1));
 
+		ArrayList<Literal> huecos = new ArrayList<Literal>();
+		ArrayList<Literal> piedras = new ArrayList<Literal>();
+		for (int y = nFilas - 1; y >= 0; y--) {
+			for (int x = 0; x < nColumnas; x++) {
+				ArrayList<Observation> cell = gridObs[x][y];
+				if (cell.isEmpty()) {
+					continue;
+				}
+
+				for (Observation obs : cell) {
+					if (obs.itype == 3) {
+						huecos.add(new Literal("EspacioLibre", x, y));
+					} else if (obs.itype == 9) {
+						piedras.add(new Literal("PiedraMovida", x, y));
+					}
+				}
+			}
+		}
+		if (huecos.size() <= piedras.size()) {
+			for (int i = 0; i < huecos.size(); i++) {
+				meta.add(huecos.get(i));
+				meta.add(piedras.get(i));
+			}
+		}
+
 		return meta;
 	}
 
 	public ArrayList<Operador> obtenerOperadores() {
+
+//		ArrayList<Operador> op = new ArrayList<>();
+//		op.add(new MoverAvatarDerecha(6,3));
+//		op.add(new MoverAvatarAbajo(7,3));
+//		op.add(new MoverAvatarDerecha(7,4));
+//		op.add(new MoverAvatarDerecha(8,4));
+//		op.add(new MoverAvatarArriba(9,4));
+//		op.add(new MoverAvatarDerecha(9,3));
+//		op.add(new MoverAvatarDerecha(10,3));
+//		op.add(new MoverAvatarAbajo(11,3));
+//		op.add(new MoverPiedraIzquierda(11,4));
+//		op.add(new MoverPiedraIzquierda(10,4));
+//		op.add(new MoverPiedraIzquierda(9,4));
+//		op.add(new MoverPiedraIzquierda(8,4));
+//		op.add(new MoverAvatarArriba(7,4));
+//		op.add(new MoverAvatarIzquierda(7,3));
+//		op.add(new TaparAgujeroHaciaAbajo(6,3));
+//		op.add(new MoverAvatarIzquierda(6,4));
+//		op.add(new MoverAvatarIzquierda(5,4));
+//		op.add(new MoverAvatarIzquierda(4,4));
+//		op.add(new MoverAvatarArriba(3,4));
+//		op.add(new MoverAvatarIzquierda(3,3));
+//		op.add(new MoverAvatarIzquierda(2,3));
+//		op.add(new MoverAvatarAbajo(1,3));
+//		op.add(new MoverPiedraDerecha(1,4));
+//		op.add(new MoverPiedraDerecha(2,4));
+//		op.add(new MoverPiedraDerecha(3,4));
+//		op.add(new MoverPiedraDerecha(4,4));
+//		op.add(new MoverAvatarArriba(5,4));
+//		op.add(new MoverAvatarDerecha(5,3));
+//		op.add(new MoverPiedraAbajo(6,3));
+//		op.add(new TaparAgujeroHaciaAbajo(6,4));
+//		op.add(new MoverAvatarAbajo(6,5));
+//		op.add(new MoverAvatarAbajo(6,6));
+//		op.add(new CogerLlave(6,7));
+//		op.add(new MoverAvatarArriba(6,7));
+//		op.add(new MoverAvatarArriba(6,6));
+//		op.add(new MoverAvatarArriba(6,5));
+//		op.add(new MoverAvatarArriba(6,4));
+//		op.add(new MoverAvatarArriba(6,3));
+//		op.add(new MoverAvatarArriba(6,2));
+
+//		return op;
+
 		ArrayList<Operador> op = new ArrayList<Operador>();
 		for (int y = 0; y < nFilas; y++) {
 			for (int x = 0; x < nColumnas; x++) {
@@ -82,13 +151,8 @@ public class Mundo {
 					op.add(new MoverPiedraDerecha(x, y));
 					op.add(new MoverPiedraIzquierda(x, y));
 				} else if (gridObs[x][y].get(0).itype != PARED) {
-					
-					if (gridObs[x][y].get(0).itype == LLAVE) {
 
-						// op.add(new CogerLlaveHaciaArriba(x, y+1));
-						// op.add(new CogerLlaveHaciaAbajo(x,y-1));
-						// op.add(new CogerLlaveHaciaDerecha(x+1, y));
-						// op.add(new CogerLlaveHaciaIzquierda(x-1, y));
+					if (gridObs[x][y].get(0).itype == LLAVE) {
 
 						op.add(new CogerLlave(x, y));
 
@@ -99,13 +163,13 @@ public class Mundo {
 					}
 
 					if (gridObs[x][y].get(0).itype == HUECO) {
-						
+
 						op.add(new TaparAgujeroHaciaAbajo(x, y - 2));
-		        		op.add(new TaparAgujeroHaciaArriba(x, y+2));
-		        		op.add(new TaparAgujeroHaciaDerecha(x-2, y));
-		        		op.add(new TaparAgujeroHaciaIzquierda(x+2, y));
+						op.add(new TaparAgujeroHaciaArriba(x, y + 2));
+						op.add(new TaparAgujeroHaciaDerecha(x - 2, y));
+						op.add(new TaparAgujeroHaciaIzquierda(x + 2, y));
 					}
-					
+
 					op.add(new MoverAvatarAbajo(x, y));
 					op.add(new MoverAvatarArriba(x, y));
 					op.add(new MoverAvatarDerecha(x, y));
@@ -121,6 +185,10 @@ public class Mundo {
 
 		return op;
 
+	}
+
+	private boolean esMuro(int x, int y) {
+		return !gridObs[x][y].isEmpty() && gridObs[x][y].get(0).itype == PARED;
 	}
 
 	public ArrayList<Literal> getEstadoInicial() {
